@@ -4,6 +4,7 @@ import com.example.otpgen.model.User;
 import com.example.otpgen.model.exceptions.*;
 import com.example.otpgen.repository.UserRepository;
 import com.example.otpgen.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,9 +12,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     public final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<User> findById(Long id){
@@ -25,12 +28,12 @@ public class UserServiceImpl implements UserService {
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
             throw new InvalidArgumentsException();
         }
-        if(!this.userRepository.findByEmailEqualsAndPasswordEquals(email, password).isPresent()){
-            throw new InvalidUserCredentialsException();
+        User user = userRepository.findByEmailEquals(email).orElseThrow(InvalidEmailOrPasswordException::new);
+        String hashedPass = user.password;
+        if(userRepository.findByEmailEquals(email).isPresent() && passwordEncoder.matches(password,hashedPass)){
+            return user;
         }
-
-        return (User) userRepository.findByEmailEqualsAndPasswordEquals(email, password)
-                .orElseThrow(InvalidUserCredentialsException::new);
+        throw new InvalidUserCredentialsException();
     }
 
     @Override
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameAlreadyExistsException(email);
         }
 
-        User user = new User(email, password, name, surname);
+        User user = new User(email, passwordEncoder.encode(password), name, surname);
 
         userRepository.save(user);
         return user;

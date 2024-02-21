@@ -23,14 +23,15 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/home")
     public String postLogin(HttpServletRequest request, Model model) {
         User user = null;
 
         try {
             user = userService.login(request.getParameter("username"), request.getParameter("password"));
+            model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
-            return "redirect:/";
+            return "home";
         } catch (InvalidUserCredentialsException | InvalidArgumentsException exception) {
             model.addAttribute("bodyContent", "login");
             model.addAttribute("hasError", true);

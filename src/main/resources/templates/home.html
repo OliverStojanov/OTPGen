@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
@@ -9,8 +9,8 @@
     <a href="/login">Login</a>
     <a href="/register">Register</a>
 </header>
-<div>
-    <span th:text="${user?.name}"></span>;
+<div >
+    <span th:text="${user?.name}"></span>
 </div>
 
 </body>
