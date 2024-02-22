@@ -5,6 +5,8 @@ import com.example.otpgen.model.exceptions.InvalidArgumentsException;
 import com.example.otpgen.model.exceptions.InvalidUserCredentialsException;
 import com.example.otpgen.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,10 @@ public class LoginController {
             user = userService.login(request.getParameter("username"), request.getParameter("password"));
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
+            userService.sendEmail(request.getParameter("username"),
+                        "This is the subject",
+                        "This is the body of the email...");
+
             return "home";
         } catch (InvalidUserCredentialsException | InvalidArgumentsException exception) {
             model.addAttribute("bodyContent", "login");
