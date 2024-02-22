@@ -44,17 +44,13 @@ public class UserServiceImpl implements UserService {
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
             throw new InvalidEmailOrPasswordException();
         }
-
         if (!password.equals(repeatedPassword)) {
             throw new PasswordsDoNotMatchException();
         }
-
         if(this.userRepository.findByEmail(email).isPresent()) {
             throw new UsernameAlreadyExistsException(email);
         }
-
         User user = new User(email, passwordEncoder.encode(password), name, surname);
-
         userRepository.save(user);
         return user;
     }

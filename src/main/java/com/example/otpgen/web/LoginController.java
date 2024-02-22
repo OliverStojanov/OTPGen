@@ -1,12 +1,12 @@
 package com.example.otpgen.web;
 
+import com.example.otpgen.model.OTP;
 import com.example.otpgen.model.User;
 import com.example.otpgen.model.exceptions.InvalidArgumentsException;
 import com.example.otpgen.model.exceptions.InvalidUserCredentialsException;
+import com.example.otpgen.service.OTPService;
 import com.example.otpgen.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class LoginController {
-    public final UserService userService;
 
-    public LoginController(UserService userService) {
+    private final OTPService otpService;
+    public final UserService userService;
+    public LoginController(OTPService otpService, UserService userService) {
+        this.otpService = otpService;
         this.userService = userService;
     }
-
     @GetMapping("/login")
     public String getLoginPage() {
         return "login";
@@ -33,9 +34,10 @@ public class LoginController {
             user = userService.login(request.getParameter("username"), request.getParameter("password"));
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
+            OTP otp =otpService.createOTP(user);
             userService.sendEmail(request.getParameter("username"),
-                        "This is the subject",
-                        "This is the body of the email...");
+                        "This is your OTPGen",
+                    otp.otp);
 
             return "home";
         } catch (InvalidUserCredentialsException | InvalidArgumentsException exception) {
