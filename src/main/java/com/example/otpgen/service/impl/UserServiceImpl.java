@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findById(Long id){
-        return userRepository.findById(id);
+    public User findById(Long id){
+        return userRepository.findById(id).orElseThrow(InvalidUserCredentialsException::new);
     }
 
     @Override

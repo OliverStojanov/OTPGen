@@ -2,15 +2,16 @@ package com.example.otpgen.web;
 
 import com.example.otpgen.model.OTP;
 import com.example.otpgen.model.User;
-import com.example.otpgen.model.exceptions.InvalidArgumentsException;
-import com.example.otpgen.model.exceptions.InvalidUserCredentialsException;
+import com.example.otpgen.model.exceptions.*;
 import com.example.otpgen.service.OTPService;
 import com.example.otpgen.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController {
@@ -26,8 +27,8 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/home")
-    public String postLogin(HttpServletRequest request, Model model) {
+    @PostMapping("/login")
+    public String postLogin(HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
         User user = null;
 
         try {
@@ -38,11 +39,31 @@ public class LoginController {
             userService.sendEmail(request.getParameter("username"),
                         "This is your OTPGen",
                     otp.otp);
-
-            return "home";
-        } catch (InvalidUserCredentialsException | InvalidArgumentsException exception) {
+            redirectAttributes.addAttribute("id", user.id);
+            return "redirect:/verify/{id}";
+        } catch (InvalidUserCredentialsException | InvalidArgumentsException | InvalidEmailOrPasswordException exception) {
             model.addAttribute("bodyContent", "login");
             model.addAttribute("hasError", true);
+            model.addAttribute("error", exception.getMessage());
+            return "redirect:/login?error=" + exception.getMessage();
+        }
+    }
+
+    @GetMapping("/verify/{id}")
+    public String getVerifyPage(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+        return "otpVerification";
+    }
+
+    @PostMapping("/verify/{id}")
+    public String verifyLogin(HttpServletRequest request, Model model, @PathVariable Long id){
+        try {
+            User user = userService.findById(id);
+            User checkedOtp = otpService.checkOtp(request.getParameter("otp"),user);
+            model.addAttribute("user", user);
+            request.getSession().setAttribute("user", user);
+            return "home";
+        }catch (InvalidUserCredentialsException | TimeRunOutException | OTPDoesNotMatchException | OtpDoesNotExistException exception){
             model.addAttribute("error", exception.getMessage());
             return "redirect:/login?error=" + exception.getMessage();
         }

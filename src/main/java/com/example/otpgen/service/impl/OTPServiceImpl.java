@@ -2,7 +2,10 @@ package com.example.otpgen.service.impl;
 
 import com.example.otpgen.model.OTP;
 import com.example.otpgen.model.User;
+import com.example.otpgen.model.exceptions.InvalidArgumentsException;
+import com.example.otpgen.model.exceptions.OTPDoesNotMatchException;
 import com.example.otpgen.model.exceptions.OtpDoesNotExistException;
+import com.example.otpgen.model.exceptions.TimeRunOutException;
 import com.example.otpgen.repository.OTPRepository;
 import com.example.otpgen.service.OTPService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,5 +57,21 @@ public class OTPServiceImpl implements OTPService {
             }
         }
         return false;
+    }
+
+    public User checkOtp(String code, User user){
+        if(otpRepository.findByIdEquals(user.id).isPresent()){
+            OTP otp = otpRepository.findByIdEquals(user.id).orElseThrow(OtpDoesNotExistException::new);
+            if(otp.timestamp.isBefore(LocalTime.now().minus(30, ChronoUnit.SECONDS))){
+                System.out.println("time passed");
+                throw new TimeRunOutException();
+            }
+            if (!otp.otp.equals(code)) {
+                System.out.println("otp code is not correct");
+                throw new OTPDoesNotMatchException();
+            }
+        }
+        System.out.println("logged in successfully");
+        return user;
     }
 }
