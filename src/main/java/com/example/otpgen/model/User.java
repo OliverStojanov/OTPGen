@@ -15,10 +15,8 @@ public class User {
     public String surname;
     @OneToOne
     public OTP otp;
-
     public User() {
     }
-
     public User(String email, String password, String name, String surname) {
         this.email = email;
         this.password = password;

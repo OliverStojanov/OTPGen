@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>OTP</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body{
+            font-family: "Noto Sans";
+        }
+        .navlink{
+            margin: 0px 7.5px;
+            height: 40px;
+            line-height: 20px;
+        }
+        input{
+            margin: 15px 0px;
+        }
+        .titleText{
+            font-size: 40px;
+            color: #286090;
+            margin-left: 20px;
+        }
+        .row{
+            display: inline-block;
+            width: 150px;
+        }
+    </style>
 </head>
-<body style="background-color: bisque; align-items: center">
-<header style="background-color: white">
-    <a href="/home">Home</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-</header>
+<body style="background-color: #286090; align-items: center">
+<div style="display:flex;justify-content:space-between;align-items: center;background-color: #E2E6EA;height: 60px" >
+    <div>
+        <div class="titleText">OTPGen</div>
+    </div>
+    <div>
+        <a class="navlink btn btn-primary btn-lg" href="/home" role="button">Home</a>
+        <a class="navlink btn btn-primary btn-lg" href="/login" role="button">Login</a>
+        <a class="navlink btn btn-primary btn-lg" href="/register" role="button">Register</a>
+    </div>
+</div>
 <div class="container" xmlns:th="http://www.thymeleaf.org" style="width: 400px; margin: auto; margin-top: 30px; padding: 50px; border-radius: 10px; background-color: white" >
 <form class="form-signin mt-xl-5" method="post" th:action="@{'/verify/{id}' (id=${user?.id})}">
     <h2 class="form-signin-heading">Verify</h2>
         <p>
             <label for="otp" class="sr-only">Enter the verification code that was sent to your email address</label>
-            <input type="text" id="otp" name="otp" class="form-control" placeholder="TOTP" required=""
+            <input type="text" id="otp" name="otp" class="form-control" placeholder="OTP" required=""
                    autofocus="">
         </p>
-
-        <div th:if="${param.error}" th:text="${param.error}" class="text-danger"></div>
-
+        <div  style="margin: 10px 0px;font-size: 16px" th:if="${param.error}" th:text="${param.error}" class="text-danger"></div>
         <div class="row">
+            <div class="col-md-7">
+                <!--TODO:ako e correct da prajt povik controller kon nov userDetails html so email, ime,
+                TODO:prezime i od userDetails da imat nekoe logout kopce(cim ne cuvam sessija mojt od login samo redirect
+                TODO: na home i da izgledat ko login)-->
+                <button id="submit" class="btn btn-lg btn-primary" type="submit">Verify</button>
+            </div>
             <div class="col-md-3">
-                <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Verify</button>
+                <!--TODO:nova funkcija-->
+                <a th:if="${param.error}" id="resend" class="btn btn-lg btn-dark">Resend code</a>
             </div>
         </div>
     </form>
 </div>
-
 </body>
 </html>

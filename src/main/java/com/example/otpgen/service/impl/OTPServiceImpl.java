@@ -2,12 +2,12 @@ package com.example.otpgen.service.impl;
 
 import com.example.otpgen.model.OTP;
 import com.example.otpgen.model.User;
-import com.example.otpgen.model.exceptions.InvalidArgumentsException;
 import com.example.otpgen.model.exceptions.OTPDoesNotMatchException;
 import com.example.otpgen.model.exceptions.OtpDoesNotExistException;
 import com.example.otpgen.model.exceptions.TimeRunOutException;
 import com.example.otpgen.repository.OTPRepository;
 import com.example.otpgen.service.OTPService;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class OTPServiceImpl implements OTPService {
                 stringBuilder.append(characters.charAt(randomIndex));
             }
             //TODO: encode otp after testing
-            OTP otp = new OTP(user.id, stringBuilder.toString(), LocalTime.now());
+            OTP otp = new OTP(user.id,stringBuilder.toString(), LocalTime.now());
             otpRepository.save(otp);
             return otp;
         }
@@ -59,6 +59,7 @@ public class OTPServiceImpl implements OTPService {
         return false;
     }
 
+    @Override
     public User checkOtp(String code, User user){
         if(otpRepository.findByIdEquals(user.id).isPresent()){
             OTP otp = otpRepository.findByIdEquals(user.id).orElseThrow(OtpDoesNotExistException::new);
@@ -73,5 +74,11 @@ public class OTPServiceImpl implements OTPService {
         }
         System.out.println("logged in successfully");
         return user;
+    }
+
+    @Override
+    @Transactional
+    public void purgeInvalidOtp() {
+        otpRepository.deleteAllByTimestampBefore(LocalTime.now().minus(30, ChronoUnit.SECONDS));
     }
 }

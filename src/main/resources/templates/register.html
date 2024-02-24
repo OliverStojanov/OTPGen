@@ -3,43 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body{
+            font-family: "Noto Sans";
+        }
+        .navlink{
+            margin: 0px 7.5px;
+            height: 40px;
+            line-height: 20px;
+        }
+        input{
+            margin: 15px 0px;
+        }
+        .titleText{
+            font-size: 40px;
+            color: #286090;
+            margin-left: 20px;
+        }
+    </style>
 </head>
-<body style="background-color: bisque; align-items: center">
-<header style="background-color: white">
-    <a href="/home">Home</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-</header>
+<body style="background-color: #286090; align-items: center">
+<div style="display:flex;justify-content:space-between;align-items: center;background-color: #E2E6EA;height: 60px" >
+    <div>
+        <div class="titleText">OTPGen</div>
+    </div>
+    <div>
+        <a class="navlink btn btn-primary btn-lg" href="/home" role="button">Home</a>
+        <a class="navlink btn btn-primary btn-lg" href="/login" role="button">Login</a>
+<!--        <a class="navlink btn btn-primary btn-lg" href="/register" role="button">Register</a>-->
+    </div>
+</div>
 <div xmlns:th="http://www.thymeleaf.org">
 
-    <div style="width: 200px; margin: auto; margin-top: 30px; padding: 50px; border-radius: 10px; background-color: white" class="container mb-4">
+    <div style="width: 400px; margin: auto; margin-top: 100px; padding: 50px; border-radius: 10px; background-color: white" class="container mb-4">
         <form class="form-signin mt-xl-5" method="post" action="/register">
             <h2 class="form-signin-heading">Register</h2>
             <p>
-                <label for="username" class="sr-only">Username</label>
+                <label for="username" class="sr-only  form-signin-heading">Username</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
             </p>
             <p>
-                <label for="password" class="sr-only">Password</label>
+                <label for="password" class="sr-only  form-signin-heading">Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
             </p>
             <p>
-                <label for="repeatedPassword" class="sr-only">Repeat Password</label>
+                <label for="repeatedPassword" class="sr-only  form-signin-heading">Repeat Password</label>
                 <input type="password" id="repeatedPassword" name="repeatedPassword" class="form-control" placeholder="Repeat Password" required="">
             </p>
             <p>
-                <label for="name" class="sr-only">Name</label>
+                <label for="name" class="sr-only  form-signin-heading">Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Name" required="" autofocus="">
             </p>
             <p>
-                <label for="surname" class="sr-only">Surname</label>
+                <label for="surname" class="sr-only  form-signin-heading">Surname</label>
                 <input type="text" id="surname" name="surname" class="form-control" placeholder="Surname" required="" autofocus="">
             </p>
-
-            <th:block th:if="${hasError}">
-                <div th:text="${error}" class="text-danger"></div>
-            </th:block>
-
+                <div th:if="${param.error}" style="margin: 10px 0px;font-size: 16px" th:text="${param.error}" class="text-danger"></div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         </form>
         <a href="/login" class="btn btn-block btn-light">Already have an account? Login here!</a>

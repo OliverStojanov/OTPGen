@@ -24,6 +24,7 @@ public class LoginController {
     }
     @GetMapping("/login")
     public String getLoginPage() {
+        otpService.purgeInvalidOtp();
         return "login";
     }
 
@@ -35,9 +36,9 @@ public class LoginController {
             user = userService.login(request.getParameter("username"), request.getParameter("password"));
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
-            OTP otp =otpService.createOTP(user);
+            OTP otp = otpService.createOTP(user);
             userService.sendEmail(request.getParameter("username"),
-                        "This is your OTPGen",
+                        "This is your OTP",
                     otp.otp);
             redirectAttributes.addAttribute("id", user.id);
             return "redirect:/verify/{id}";
@@ -65,7 +66,7 @@ public class LoginController {
             return "home";
         }catch (InvalidUserCredentialsException | TimeRunOutException | OTPDoesNotMatchException | OtpDoesNotExistException exception){
             model.addAttribute("error", exception.getMessage());
-            return "redirect:/login?error=" + exception.getMessage();
+            return "redirect:/verify/{id}?error=" + exception.getMessage();
         }
     }
 }
