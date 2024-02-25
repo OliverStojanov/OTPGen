@@ -1,5 +1,6 @@
 package com.example.otpgen.web;
 
+import com.example.otpgen.model.Role;
 import com.example.otpgen.model.exceptions.InvalidArgumentsException;
 import com.example.otpgen.model.exceptions.PasswordsDoNotMatchException;
 import com.example.otpgen.model.exceptions.UsernameAlreadyExistsException;
@@ -29,10 +30,11 @@ public class RegisterController {
                            @RequestParam String repeatedPassword,
                            @RequestParam String name,
                            @RequestParam String surname,
+                           @RequestParam Role role,
                            Model model
     ) {
         try{
-            this.userService.register(username, password, repeatedPassword, name, surname);
+            this.userService.register(username, password, repeatedPassword, name, surname,role);
             return "redirect:/login";
         } catch (InvalidArgumentsException | PasswordsDoNotMatchException | UsernameAlreadyExistsException exception) {
             model.addAttribute("error", exception.getMessage());

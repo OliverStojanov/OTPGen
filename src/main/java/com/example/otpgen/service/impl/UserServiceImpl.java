@@ -1,5 +1,6 @@
 package com.example.otpgen.service.impl;
 
+import com.example.otpgen.model.Role;
 import com.example.otpgen.model.User;
 import com.example.otpgen.model.exceptions.*;
 import com.example.otpgen.repository.UserRepository;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(String email, String password, String repeatedPassword, String name, String surname) {
+    public User register(String email, String password, String repeatedPassword, String name, String surname, Role role) {
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
             throw new InvalidEmailOrPasswordException();
         }
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
         if(this.userRepository.findByEmail(email).isPresent()) {
             throw new UsernameAlreadyExistsException(email);
         }
-        User user = new User(email, passwordEncoder.encode(password), name, surname);
+        User user = new User(email, passwordEncoder.encode(password), name, surname, role);
         userRepository.save(user);
         return user;
     }

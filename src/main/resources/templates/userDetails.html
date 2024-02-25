@@ -13,38 +13,132 @@
             height: 40px;
             line-height: 20px;
         }
-        .projTitle{
-            width: 500px;
-            align-items: center;
-            font-size: 30px;
-            color: #E2E6EA;
-            margin-top: 20px;
-        }
         .titleText{
             font-size: 40px;
             color: #286090;
             margin-left: 20px;
         }
+        .left{
+            display: flex;
+            justify-content: left;
+        }
+        .userValues{
+            padding-left: 10px;
+            border-radius: 5px;
+            border: 1px solid #286090;
+            background-color: rgba(40,96,144,0.78) ;
+            color: #E2E6EA !important;
+        }
+        .btnNewPost{
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 10px;
+            color: #E2E6EA !important;
+            display: inline;
+        }
+        form{
+            width: 400px;
+            display: flex;
+            justify-content: end;
+        }
+        .projTitle{
+            width: 500px;
+            align-items: center;
+            font-size: 30px;
+            color: #E2E6EA;
+            margin:60px 80px;
+            background-color: #E2E6EA;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-height:430px;
+            position: sticky;
+            top: 60px;
+        }
+        .userPosts{
+            width: 1300px;
+            height: max-content;
+            background-color: #E2E6EA;
+            min-height: 1430px;
+            margin:60px 80px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            color: #286090;
+        }
+        .userLabels{
+            color: #286090;
+            font-size: 30px;
+        }
+        .mps{
+            border-bottom: 1px solid #286090;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .postTitle{
+            font-size: 22px;
+            margin: 5px 5px;
+        }
+        .postContent{
+            font-size: 16px;
+            margin: 0px 10px;
+            text-overflow: ellipsis;
+            height: 66px;
+            overflow: auto;
+        }
+        .postWrap{
+            border: 1px solid #286090;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin-bottom: 20px;
+        }
+        #rightBar{
+        }
     </style>
 </head>
 <body style="background-color: #286090">
 <div style="display:flex;justify-content:space-between;align-items: center;background-color: #E2E6EA;height: 60px" >
-    <div>
+    <div class="left">
         <label class="titleText">OTPGen</label>
-        <a class="navlink btn btn-primary btn-lg" th:href="@{'/home/{id}' (id=${user?.id})}" role="button">Home</a>
     </div>
     <div>
         <!--        <a class="navlink btn btn-primary btn-lg" href="/home" role="button">Home</a>-->
+        <a class="navlink btn btn-primary btn-lg" th:href="@{'/home'}" role="button">Home</a>
         <a class="navlink btn btn-primary btn-lg" th:href="@{'/userDetails/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}" th:text="${user?.name}"></a>
         <a class="navlink btn btn-primary btn-lg" href="/login" th:if="${user!=null}" role="button">Sign out</a>
     </div>
 </div>
-<div style="display: grid; place-items: center">
-    <div class="projTitle">
-        <div th:text="${user?.name}"></div>
-        <div th:text="${user?.surname}"></div>
-        <div th:text="${user?.email}"></div>
+<div style="display:flex ; justify-content: space-between">
+    <div class="userPosts">
+        <div class="userLabels mps">
+            My Posts :
+            <form th:method="get" th:action="@{'/postForm/{id}'}">
+                <button style="color: #286090" type="submit" class="btn btnNewPost btn-primary">Make a new post</button>
+            </form>
+        </div>
+        <div class="postWrap">
+            <!--            -->
+            <div class="postTitle">New post title</div>
+            <div class="postContent">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. </div>
+        </div>
+
     </div>
+    <div id="rightBar">
+        <div class="projTitle">
+            <div class="userLabels">Name :</div>
+            <div class="userValues" th:text="${user?.name}">Name</div>
+            <br>
+            <div class="userLabels">Surname :</div>
+            <div class="userValues" th:text="${user?.surname}">Surname</div>
+            <br>
+            <div class="userLabels">Email :</div>
+            <div class="userValues" th:text="${user?.email}">Email</div>
+
+        </div>
+    </div>
+
+
 </div>
 
 </body>

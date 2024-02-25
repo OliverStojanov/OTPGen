@@ -63,6 +63,7 @@ public class LoginController {
             User checkedOtp = otpService.checkOtp(request.getParameter("otp"),user);
             model.addAttribute("user", user);
             request.getSession().setAttribute("user", user);
+            //TODO: redirect na forum
             return "home";
         }catch (InvalidUserCredentialsException | TimeRunOutException | OTPDoesNotMatchException | OtpDoesNotExistException exception){
             model.addAttribute("error", exception.getMessage());

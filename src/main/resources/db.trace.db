@@ -1,0 +1,3 @@
+2024-02-25 16:40:49.280916+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM OTP_USER OTP [*]OTP_USER"; SQL statement:
+SELECT * FROM OTP_USER OTP OTP_USER [42000-224]

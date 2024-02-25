@@ -15,7 +15,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping({"/", "/home", "/home/{id}"})
+    @GetMapping({"/", "/home" })
     public String getHomePage(@PathVariable(required = false) Long id, Model model){
         if(id!=null) {
             User user = userService.findById(id);
@@ -23,6 +23,11 @@ public class UserController {
         }
         return "home";
     }
+//    @GetMapping("/postForm/{id}")
+//    public String getPostForm(@PathVariable Long id,Model model ){
+//        model.addAttribute("user",userService.findById(id));
+//        return "postForm";
+//    }
 
 
 

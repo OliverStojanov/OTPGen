@@ -7,6 +7,7 @@
     <style>
         body{
             font-family: "Noto Sans";
+            color: #286090;
         }
         .navlink{
             margin: 0px 7.5px;
@@ -58,6 +59,13 @@
             <p>
                 <label for="surname" class="sr-only  form-signin-heading">Surname</label>
                 <input type="text" id="surname" name="surname" class="form-control" placeholder="Surname" required="" autofocus="">
+            </p>
+            <p>
+                <label for="role" class="sr-only  form-signin-heading">Surname</label>
+                <select type="text" id="role" name="role" class="form-control" placeholder="Role" required="" autofocus="">
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                </select>
             </p>
                 <div th:if="${param.error}" style="margin: 10px 0px;font-size: 16px" th:text="${param.error}" class="text-danger"></div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
