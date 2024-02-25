@@ -1,9 +1,11 @@
 package com.example.otpgen.web;
 
+import com.example.otpgen.model.User;
 import com.example.otpgen.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class UserController {
@@ -13,9 +15,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping({"/", "/home"})
-    public String getHomePage(Model model){
+    @GetMapping({"/", "/home", "/home/{id}"})
+    public String getHomePage(@PathVariable(required = false) Long id, Model model){
+        if(id!=null) {
+            User user = userService.findById(id);
+            model.addAttribute("user", user);
+        }
         return "home";
     }
+
+
 
 }

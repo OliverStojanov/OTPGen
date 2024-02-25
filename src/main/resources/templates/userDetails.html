@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body{
+            font-family: "Noto Sans";
+        }
+        .navlink{
+            margin: 0px 7.5px;
+            height: 40px;
+            line-height: 20px;
+        }
+        .projTitle{
+            width: 500px;
+            align-items: center;
+            font-size: 30px;
+            color: #E2E6EA;
+            margin-top: 20px;
+        }
+        .titleText{
+            font-size: 40px;
+            color: #286090;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body style="background-color: #286090">
+<div style="display:flex;justify-content:space-between;align-items: center;background-color: #E2E6EA;height: 60px" >
+    <div>
+        <label class="titleText">OTPGen</label>
+        <a class="navlink btn btn-primary btn-lg" th:href="@{'/home/{id}' (id=${user?.id})}" role="button">Home</a>
+    </div>
+    <div>
+        <!--        <a class="navlink btn btn-primary btn-lg" href="/home" role="button">Home</a>-->
+        <a class="navlink btn btn-primary btn-lg" th:href="@{'/userDetails/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}" th:text="${user?.name}"></a>
+        <a class="navlink btn btn-primary btn-lg" href="/login" th:if="${user!=null}" role="button">Sign out</a>
+    </div>
+</div>
+<div style="display: grid; place-items: center">
+    <div class="projTitle">
+        <div th:text="${user?.name}"></div>
+        <div th:text="${user?.surname}"></div>
+        <div th:text="${user?.email}"></div>
+    </div>
+</div>
+
+</body>
+</html>
