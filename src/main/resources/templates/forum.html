@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Your profile</title>
+    <title>Forum</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
         body{
@@ -37,11 +37,7 @@
             color: #E2E6EA !important;
             display: inline;
         }
-        form{
-            width: 400px;
-            display: flex;
-            justify-content: end;
-        }
+
         .projTitle{
             width: 500px;
             align-items: center;
@@ -93,8 +89,6 @@
             padding: 5px 10px;
             margin-bottom: 20px;
         }
-        #rightBar{
-        }
     </style>
 </head>
 <body style="background-color: #286090">
@@ -108,39 +102,22 @@
         <a class="navlink btn btn-primary btn-lg" href="/login" role="button" th:if="${user!=null}">Sign out</a>
     </div>
 </div>
-<div style="display:flex ; justify-content: space-between">
-    <div class="userPosts">
-        <div class="userLabels mps">
-            My Posts :
-            <form th:method="get" th:action="@{'/postForm/{id}' (id=${user?.id})}">
-                <button style="color: #286090" type="submit" class="btn btnNewPost btn-primary">Make a new post</button>
-            </form>
-        </div>
-        <div class="postWrap" th:each="post : ${posts}">
-            <div class="postTitle" th:text="${post?.title}">New post title</div>
-            <div class="postContent" th:text="${post?.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. </div>
-            <form th:if="${post?.user.id == user?.id}" method="post" th:action="@{'/deleteMine/{id}' (id=${post?.id})}">
-                <button type="submit" class="btn btnNewPost btn-primary">Delete</button>
-            </form>
-        </div>
-
+<div class="userPosts">
+    <div class="userLabels mps">
+        Feed :
+        <form th:method="get" th:action="@{'/postForm/{id}' (id=${user?.id})}">
+            <button style="color: #286090" type="submit" class="btn btnNewPost btn-primary">Make a new post</button>
+        </form>
     </div>
-    <div id="rightBar">
-        <div class="projTitle">
-            <div class="userLabels">Name :</div>
-            <div class="userValues" th:text="${user?.name}">Name</div>
-            <br>
-            <div class="userLabels">Surname :</div>
-            <div class="userValues" th:text="${user?.surname}">Surname</div>
-            <br>
-            <div class="userLabels">Email :</div>
-            <div class="userValues" th:text="${user?.email}">Email</div>
-
-        </div>
+    <div class="postWrap" th:each="post : ${posts}">
+        <div class="postTitle" th:text="${post?.title}">New post title</div>
+        <div class="postContent" th:text="${post?.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. </div>
+        <form th:if="${post?.user.id == user?.id}" method="post" th:action="@{'/delete/{id}' (id=${post?.id})}">
+<!--vo th:if treba da se dodade || user?.role.equals(Role.ADMIN) ama frla NullPointerException bidejki imame useri so role=null-->
+            <button type="submit" class="btn btnNewPost btn-primary">Delete</button>
+        </form>
     </div>
-
 
 </div>
-
 </body>
 </html>

@@ -64,7 +64,7 @@ public class LoginController {
             model.addAttribute("user", user);
             request.getSession().setAttribute("user", user);
             //TODO: redirect na forum
-            return "home";
+            return "redirect:/forum/{id}";
         }catch (InvalidUserCredentialsException | TimeRunOutException | OTPDoesNotMatchException | OtpDoesNotExistException exception){
             model.addAttribute("error", exception.getMessage());
             return "redirect:/verify/{id}?error=" + exception.getMessage();

@@ -20,7 +20,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( (requests) -> requests
                         .requestMatchers("/", "/home", "/register", "/login", "/h2","*","/h2/","/h2/*", "/*",
-                                "/verify/*", "/resend/*", "/userDetails/*", "/home/*")
+                                "/verify/*", "/resend/*", "/userDetails/*", "/forum/*", "/postForm/*",
+                                "/myPostForm/*", "/delete/*", "/deleteMine/*")
                         .permitAll()
                 );
 

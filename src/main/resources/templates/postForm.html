@@ -3,25 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>New Post</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    body{
+      font-family: "Noto Sans";
+    }
+    .navlink{
+      margin: 0px 7.5px;
+      height: 40px;
+      line-height: 20px;
+    }
+    .titleText{
+      font-size: 40px;
+      color: #286090;
+      margin-left: 20px;
+    }
+    .left{
+      display: flex;
+      justify-content: left;
+    }
+
+  </style>
 </head>
-<body>
+<body style="background-color: #286090">
+<div style="display:flex;justify-content:space-between;align-items: center;background-color: #E2E6EA;height: 60px" >
+  <div class="left">
+    <label class="titleText">OTPGen</label>
+  </div>
+  <div>
+    <a class="navlink btn btn-primary btn-lg" th:href="@{'/forum/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}">Forum</a>
+    <a class="navlink btn btn-primary btn-lg" th:href="@{'/userDetails/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}" th:text="${user?.name}"></a>
+    <a class="navlink btn btn-primary btn-lg" href="/login" role="button" th:if="${user!=null}">Sign out</a>
+  </div>
+</div>
 <div th:if="${user!=null}">
   <div class="container">
     <h2>Create a New Post</h2>
-    <form method="get" style="font-size: 20px" th:action="@{'/home/{id}' (id=${user?.id})}">
+    <form method="post" style="font-size: 20px" th:action="@{'/postForm/{id}' (id=${user?.id})}">
       <div class="form-group mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter post title">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Enter post title">
       </div>
       <div class="form-group mb-3">
         <label for="content" class="form-label">Content</label>
-        <textarea class="form-control" id="content" rows="5" placeholder="Enter post content"></textarea>
+        <textarea class="form-control" id="content" rows="5" name="content" placeholder="Enter post content"></textarea>
       </div>
       <!--TODO: da se kreira nov model Post(@ID id, userId, title, content) so klik na kopceto submit se dodava -->
       <!--TODO: nov post od strana na korisnikot pri sto se vrakame na home pageot , kade se prikazani ostanatite postovi -->
       <!--TODO: isto taka koga odime na strana za userDetails pokraj informaciite za korisnikot se prikazuvaat i site postovi koj gi objavil toj korisnik-->
-      <button style="color: #286090" type="submit" class="btn btn-secondary">Submit</button>
+      <button style="color: darkblue" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </div>

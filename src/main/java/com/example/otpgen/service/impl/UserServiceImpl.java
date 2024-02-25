@@ -1,5 +1,6 @@
 package com.example.otpgen.service.impl;
 
+import com.example.otpgen.model.Post;
 import com.example.otpgen.model.Role;
 import com.example.otpgen.model.User;
 import com.example.otpgen.model.exceptions.*;
@@ -11,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,5 +70,17 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
 
         System.out.println("Mail sent successfully...");
+    }
+
+    @Override
+    public List<Post> findAll(Long id) {
+        return findById(id).posts;
+    }
+
+    @Override
+    public void addNewPost(Post newPost) {
+        User user = newPost.getUser();
+        userRepository.save(user);
+        return;
     }
 }

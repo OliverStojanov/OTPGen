@@ -34,8 +34,8 @@
     </div>
     <div>
 <!--        <a class="navlink btn btn-primary btn-lg" href="/home" role="button">Home</a>-->
-        <a class="navlink btn btn-primary btn-lg" th:href="@{'/userDetails/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}" th:text="${user?.name}"></a>
-        <a class="navlink btn btn-primary btn-lg" href="/login" th:if="${user!=null}" role="button">Sign out</a>
+<!--        <a class="navlink btn btn-primary btn-lg" th:href="@{'/userDetails/{id}' (id=${user?.id})}" role="button" th:if="${user!=null}" th:text="${user?.name}"></a>-->
+<!--        <a class="navlink btn btn-primary btn-lg" href="/login" th:if="${user!=null}" role="button">Sign out</a>-->
         <a class="navlink btn btn-primary btn-lg" href="/login" th:if="${user==null}" role="button">Sign in</a>
         <a class="navlink btn btn-primary btn-lg" href="/register" th:if="${user==null}" role="button">Register</a>
     </div>
@@ -43,8 +43,6 @@
 <div class="projTitle">
     <div th:if="${user==null}">
         OTPGen
-    </div>
-
     </div>
 </div>
 
