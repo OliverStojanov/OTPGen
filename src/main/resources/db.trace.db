@@ -1,3 +1,9 @@
 2024-02-25 16:40:49.280916+01:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM OTP_USER OTP [*]OTP_USER"; SQL statement:
 SELECT * FROM OTP_USER OTP OTP_USER [42000-224]
+2024-02-26 01:15:57.406863+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lore... (574)"; SQL statement:
+insert into post (content,title,user_id,id) values (?,?,?,?) [22001-224]
+2024-02-26 01:46:16.878423+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "CONTENT CHARACTER VARYING(255)": "'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasda... (384)"; SQL statement:
+insert into post (content,title,user_id,id) values (?,?,?,?) [22001-224]

@@ -78,7 +78,8 @@
         }
         .postTitle{
             font-size: 22px;
-            margin: 5px 5px;
+            margin: 5px 10px;
+            width: fit-content;
         }
         .postContent{
             font-size: 16px;
@@ -86,12 +87,22 @@
             text-overflow: ellipsis;
             height: 66px;
             overflow: auto;
+            grid-column-start: span 2;
         }
         .postWrap{
             border: 1px solid #286090;
             border-radius: 10px;
             padding: 5px 10px;
             margin-bottom: 20px;
+            display: grid;
+            grid-template-rows:1fr 1fr ;
+            grid-template-columns:1fr 1fr ;
+        }
+        #deleteBtn{
+            width: 220px;
+            display: inline-block;
+            justify-self: end;
+            padding-top: 5px;
         }
         #rightBar{
         }
@@ -118,10 +129,11 @@
         </div>
         <div class="postWrap" th:each="post : ${posts}">
             <div class="postTitle" th:text="${post?.title}">New post title</div>
-            <div class="postContent" th:text="${post?.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. </div>
-            <form th:if="${post?.user.id == user?.id}" method="post" th:action="@{'/deleteMine/{id}' (id=${post?.id})}">
-                <button type="submit" class="btn btnNewPost btn-primary">Delete</button>
+            <form id="deleteBtn" th:if="${post?.user.id == user?.id}" method="post" th:action="@{'/deleteMine/{id}' (id=${post?.id})}">
+                <button type="submit" class="btn btnNewPost btn-danger">Delete</button>
             </form>
+            <div class="postContent" th:text="${post?.content}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. </div>
+
         </div>
 
     </div>
