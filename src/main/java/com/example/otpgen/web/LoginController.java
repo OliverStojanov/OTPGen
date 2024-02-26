@@ -37,9 +37,12 @@ public class LoginController {
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
             OTP otp = otpService.createOTP(user);
-            userService.sendEmail(request.getParameter("username"),
-                        "This is your OTP",
-                    otp.otp);
+                try{
+                    userService.sendEmailFromTemplate(request.getParameter("username"),user,otp.otp);
+                }
+                catch (Exception e){
+                    e.getMessage();
+                }
             redirectAttributes.addAttribute("id", user.id);
             return "redirect:/verify/{id}";
         } catch (InvalidUserCredentialsException | InvalidArgumentsException | InvalidEmailOrPasswordException exception) {

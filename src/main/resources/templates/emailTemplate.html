@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    .bodyWrap{
+      font-family: "Noto Sans";
+      width: 700px;
+      height: 500px;
+      background-color: #E2E6EA;
+      margin:100px auto;
+      border-radius: 5px;
+      border: 4px solid #113859;
+    }
+    .appTitle{
+      color: #286090;
+      font-size: 60px;
+      line-height: 100px;
+      padding-left: 30px;
+      height: 100px;
+      border-bottom: 4px solid #113859;
+    }
+    .body{
+      background-color: #286090;
+      height: 393px;
+
+
+    }
+    .bodyTitle{
+      padding-left: 40px;
+      padding-top: 20px;
+      font-size: 30px;
+      color: #E2E6EA;
+    }
+    .userNameHolder{
+      padding-left: 40px;
+      padding-top: 20px;
+      font-size: 30px;
+      color: #E2E6EA;
+    }
+    .otpWrap{
+      width: 300px;
+      height: 100px;
+      background-color: #113859;
+      color: #E2E6EA;
+      margin: 0 auto;
+      margin-top: 50px;
+
+      border-radius: 10px;
+      border: 3px solid #E2E6EA;
+    }
+    .otpHolder{
+      font-size: 40px;
+      line-height: 100px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div class="bodyWrap">
+  <div class="header">
+    <div class="appTitle">OTPGen</div>
+  </div>
+  <div class="body">
+    <div class="userNameHolder" th:text="${user.name}">Username</div>
+    <div class="bodyTitle">
+      This is your OTP:
+    </div>
+    <div class="otpWrap">
+      <div class="otpHolder" th:text="${otp}">OTPGen</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

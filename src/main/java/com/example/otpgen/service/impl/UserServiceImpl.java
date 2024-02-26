@@ -6,11 +6,18 @@ import com.example.otpgen.model.User;
 import com.example.otpgen.model.exceptions.*;
 import com.example.otpgen.repository.UserRepository;
 import com.example.otpgen.service.UserService;
+import jakarta.mail.MessagingException;
+
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
 
 import java.util.List;
 
@@ -60,6 +67,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private TemplateEngine templateEngine;
+
     public void sendEmail(String toEmail, String subject, String body){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("otprojectib@gmail.com");
@@ -70,6 +80,31 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
 
         System.out.println("Mail sent successfully...");
+    }
+    public void sendEmailFromTemplate(String toEmail, User user, String otp) throws MessagingException {
+//        MimeMessage message = mailSender.createMimeMessage();
+//
+//        message.setFrom(new InternetAddress("otprojectib@gmail.com"));
+//        message.setRecipients(MimeMessage.RecipientType.TO, toEmail);
+//        message.setSubject("New Login Attempt");
+//
+//        message.setContent("emailTemplate.html", "text/html; charset=utf-8");
+//
+//        mailSender.send(message);
+
+                MimeMessage message = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+                helper.setTo(toEmail);
+                helper.setSubject("New Login Attempt");
+
+                Context context = new Context();
+                context.setVariable("user", user);
+                context.setVariable("otp", otp);
+
+                String htmlContent = templateEngine.process("emailTemplate",context);
+                helper.setText(htmlContent, true);
+                mailSender.send(message);
     }
 
     @Override
