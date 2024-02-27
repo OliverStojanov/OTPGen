@@ -74,7 +74,7 @@
         }
         .postTitle{
             font-size: 22px;
-            margin: 5px 10px;
+            margin: 10px 10px;
             width: fit-content;
         }
         .postContent{
@@ -121,10 +121,9 @@
         </form>
     </div>
     <div class="postWrap" th:each="post : ${posts}">
-        <div class="postTitle" th:text="${post?.title}">New post title</div>
+        <div class="postTitle" th:text="${post?.title +' by '+ post.user.name}">New post title</div>
         <form id="deleteBtn" method="post" th:action="@{'/delete/{id}' (id=${post?.id})}">
-            <!--vo th:if treba da se dodade || user?.role.equals(Role.ADMIN) ama frla NullPointerException bidejki imame useri so role=null-->
-            <button th:if="${post?.user.id == user?.id || user?.role == 'ADMIN'}" type="submit" class="btn btnNewPost btn-sm btn-danger">Delete</button>
+            <button th:if="${post?.user.id == user?.id || user?.role.name() == 'ADMIN'}" type="submit" class="btn btnNewPost btn-sm btn-danger">Delete</button>
         </form>
         <div class="postContent" th:text="${post?.content}"> </div>
     </div>

@@ -76,15 +76,18 @@ public class LoginController {
 
     @GetMapping("/resend/{id}")
     public String resend(@PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
-        User user = userService.findById(id);
+            User user = userService.findById(id);
 
         try {
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
             OTP otp = otpService.createOTP(user);
-            userService.sendEmail(user.email,
-                    "This is your OTP",
-                    otp.otp);
+            try{
+                userService.sendEmailFromTemplate(user.email,user,otp.otp);
+            }
+            catch (Exception e){
+                e.getMessage();
+            }
             redirectAttributes.addAttribute("id", user.id);
             return "redirect:/verify/{id}";
         } catch (InvalidUserCredentialsException | InvalidArgumentsException | InvalidEmailOrPasswordException exception) {
