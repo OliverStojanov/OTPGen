@@ -36,7 +36,7 @@ public class LoginController {
             user = userService.login(request.getParameter("username"), request.getParameter("password"));
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
-            OTP otp = otpService.createOTP(user);
+            OTP otp = otpService.createTOTP(user);
                 try{
                     userService.sendEmailFromTemplate(request.getParameter("username"),user,otp.otp);
                 }
@@ -81,7 +81,7 @@ public class LoginController {
         try {
             model.addAttribute("user",user);
             request.getSession().setAttribute("user", user);
-            OTP otp = otpService.createOTP(user);
+            OTP otp = otpService.createTOTP(user);
             try{
                 userService.sendEmailFromTemplate(user.email,user,otp.otp);
             }
