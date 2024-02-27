@@ -28,7 +28,6 @@ public class OTPServiceImpl implements OTPService {
 
     @Override
     public OTP createOTP(User user) {
-      //  if(!checkOtpValid(user)){
             String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             StringBuilder stringBuilder = new StringBuilder();
             Random random = new Random();
@@ -40,8 +39,6 @@ public class OTPServiceImpl implements OTPService {
             OTP otp = new OTP(user.id,stringBuilder.toString(), LocalTime.now());
             otpRepository.save(otp);
             return otp;
-//        }
-//        return null;
     }
 
     @Override

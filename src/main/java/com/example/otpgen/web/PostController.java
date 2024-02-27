@@ -32,12 +32,13 @@ public class PostController {
     }
 
     @PostMapping("/postForm/{id}")
-    public String createNewPost(@PathVariable Long id, HttpServletRequest request, Model model){
+    public String createNewPost(@PathVariable Long id, RedirectAttributes redirectAttributes , HttpServletRequest request, Model model){
         User user = userService.findById(id);
         model.addAttribute("user", user);
         userService.addNewPost(postService.createNewPost(user, request.getParameter("title"), request.getParameter("content")));
         model.addAttribute("posts", postService.findAll());
-        return "forum";
+        redirectAttributes.addAttribute("id", user.id);
+        return "redirect:/forum/{id}";
     }
 
     @PostMapping("/myPostForm/{id}")

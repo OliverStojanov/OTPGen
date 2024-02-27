@@ -82,15 +82,6 @@ public class UserServiceImpl implements UserService {
         System.out.println("Mail sent successfully...");
     }
     public void sendEmailFromTemplate(String toEmail, User user, String otp) throws MessagingException {
-//        MimeMessage message = mailSender.createMimeMessage();
-//
-//        message.setFrom(new InternetAddress("otprojectib@gmail.com"));
-//        message.setRecipients(MimeMessage.RecipientType.TO, toEmail);
-//        message.setSubject("New Login Attempt");
-//
-//        message.setContent("emailTemplate.html", "text/html; charset=utf-8");
-//
-//        mailSender.send(message);
 
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);

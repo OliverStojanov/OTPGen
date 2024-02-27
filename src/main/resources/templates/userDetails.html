@@ -128,7 +128,7 @@
             </form>
         </div>
         <div class="postWrap" th:each="post : ${posts}">
-            <div class="postTitle" th:text="${post?.title +' by '+ post.user.name}">New post title</div>
+            <div class="postTitle" th:text="${post?.title}">New post title</div>
 
             <form id="deleteBtn" th:if="${post?.user.id == user?.id}" method="post" th:action="@{'/deleteMine/{id}' (id=${post?.id})}">
                 <button type="submit" class="btn btnNewPost btn-danger">Delete</button>

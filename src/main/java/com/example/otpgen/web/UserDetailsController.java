@@ -1,6 +1,7 @@
 package com.example.otpgen.web;
 
 import com.example.otpgen.model.User;
+import com.example.otpgen.model.exceptions.InvalidUserCredentialsException;
 import com.example.otpgen.service.PostService;
 import com.example.otpgen.service.UserService;
 import org.springframework.stereotype.Controller;

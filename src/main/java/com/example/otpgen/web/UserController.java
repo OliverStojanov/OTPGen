@@ -23,11 +23,6 @@ public class UserController {
         }
         return "home";
     }
-//    @GetMapping("/postForm/{id}")
-//    public String getPostForm(@PathVariable Long id,Model model ){
-//        model.addAttribute("user",userService.findById(id));
-//        return "postForm";
-//    }
 
 
 
