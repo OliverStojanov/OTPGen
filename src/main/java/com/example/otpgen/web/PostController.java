@@ -23,7 +23,6 @@ public class PostController {
         this.postService = postService;
     }
 
-
     @GetMapping("/postForm/{id}")
     public String showPostForm(@PathVariable Long id, Model model){
         User user = userService.findById(id);

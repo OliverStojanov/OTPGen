@@ -28,17 +28,19 @@ public class OTPServiceImpl implements OTPService {
 
     @Override
     public OTP createOTP(User user) {
-            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            StringBuilder stringBuilder = new StringBuilder();
-            Random random = new Random();
-            for (int i = 0; i < 6; i++) {
-                int randomIndex = random.nextInt(characters.length());
-                stringBuilder.append(characters.charAt(randomIndex));
+            if(!checkOtpValid(user)) {
+                String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                StringBuilder stringBuilder = new StringBuilder();
+                Random random = new Random();
+                for (int i = 0; i < 6; i++) {
+                    int randomIndex = random.nextInt(characters.length());
+                    stringBuilder.append(characters.charAt(randomIndex));
+                }
+                OTP otp = new OTP(user.id, stringBuilder.toString(), LocalTime.now());
+                otpRepository.save(otp);
+                return otp;
             }
-            //TODO: encode otp after testing
-            OTP otp = new OTP(user.id,stringBuilder.toString(), LocalTime.now());
-            otpRepository.save(otp);
-            return otp;
+            return null;
     }
 
     @Override

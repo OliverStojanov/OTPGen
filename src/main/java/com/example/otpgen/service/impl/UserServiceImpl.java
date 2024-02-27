@@ -70,19 +70,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public void sendEmail(String toEmail, String subject, String body){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("otprojectib@gmail.com");
-        message.setTo(toEmail);
-        message.setSubject(subject);
-        message.setText(body);
-
-        mailSender.send(message);
-
-        System.out.println("Mail sent successfully...");
-    }
     public void sendEmailFromTemplate(String toEmail, User user, String otp) throws MessagingException {
-
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -107,6 +95,5 @@ public class UserServiceImpl implements UserService {
     public void addNewPost(Post newPost) {
         User user = newPost.getUser();
         userRepository.save(user);
-        return;
     }
 }

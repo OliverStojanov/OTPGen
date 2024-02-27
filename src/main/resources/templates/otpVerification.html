@@ -49,13 +49,9 @@
         <div  style="margin: 10px 0px;font-size: 16px" th:if="${param.error}" th:text="${param.error}" class="text-danger"></div>
         <div class="row">
             <div class="col-md-7">
-                <!--TODO:ako e correct da prajt povik controller kon nov userDetails html so email, ime,
-                TODO:prezime i od userDetails da imat nekoe logout kopce(cim ne cuvam sessija mojt od login samo redirect
-                TODO: na home i da izgledat ko login)-->
                 <button id="submit" class="btn btn-lg btn-primary" type="submit">Verify</button>
             </div>
             <div class="col-md-3">
-                <!--TODO:nova funkcija-->
                 <a th:if="${param.error}" th:href="@{'/resend/{id}' (id=${user?.id})}" id="resend" class="btn btn-lg btn-dark">Resend code</a>
             </div>
         </div>
