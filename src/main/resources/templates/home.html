@@ -17,6 +17,7 @@
             display: flex;
             justify-content: center;
             font-size: 100px;
+            align-items: center;
             color: #E2E6EA;
             margin-top: 100px;
         }
@@ -24,6 +25,12 @@
             font-size: 40px;
             color: #286090;
             margin-left: 20px;
+        }
+        img{
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+
         }
     </style>
 </head>
@@ -44,6 +51,12 @@
     <div th:if="${user==null}">
         OTPGen
     </div>
+    <br>
+</div>
+<div class="projTitle" style="margin-top: -30px">
+    <a href="https://github.com/hinokami27/OTPGen">
+        <img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png">
+    </a>
 </div>
 
 </body>

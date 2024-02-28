@@ -68,11 +68,6 @@ public class OTPServiceImpl implements OTPService {
 //            return null;
 //    }
 
-
-
-
-
-
     @Override
     public Boolean checkOtpValid(User user) {
         if(otpRepository.findByIdEquals(user.id).isPresent()) {
